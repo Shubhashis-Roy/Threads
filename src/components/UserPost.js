@@ -7,7 +7,6 @@ import { Box, Flex, Text } from "@chakra-ui/layout";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Actions from "./Actions";
-// import { useState } from "react";
 
 const UserPost = ({ likes, replies, postImg, postTitle }) => {
   const [liked, setLiked] = useState();
