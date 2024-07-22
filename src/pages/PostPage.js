@@ -75,10 +75,27 @@ const PostPage = () => {
         <Button>Get</Button>
       </Flex>
       <Divider my={4} />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
+      <Comment
+        userAvatar={"/zuck-avatar.png"}
+        createdAt="2d"
+        comment="comment 1"
+        username="Name 1"
+        likes={12}
+      />
+      <Comment
+        userAvatar="https://bit.ly/ryan-florence"
+        createdAt="2d"
+        comment="comment 1"
+        username="Name 1"
+        likes={12}
+      />
+      <Comment
+        userAvatar="https://bit.ly/prosper-baba"
+        createdAt="2d"
+        comment="comment 1"
+        username="Name 1"
+        likes={12}
+      />
     </>
   );
 };
