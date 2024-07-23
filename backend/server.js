@@ -1,11 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
+import cookieParser from "cookie-parser";
+import userRoutes from "./routers/userRoutes.js";
 
 dotenv.config();
 
 connectDB();
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Routes
+app.use("/app/v1/user", userRoutes);
 
 const PORT = process.env.PORT || 4000;
 
