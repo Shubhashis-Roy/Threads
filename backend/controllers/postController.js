@@ -86,3 +86,83 @@ export const deletePost = async (req, res) => {
     console.log("delete post Error: ", err);
   }
 };
+
+// Like & Unlike Post
+export const likeUnlikePost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const userId = req.user._id;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const userLikedPost = post.likes.includes(userId);
+
+    if (userLikedPost) {
+      // Unlike post
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+      res.status(200).json({ message: "Post unliked successfully" });
+    } else {
+      // Like post
+      post.likes.push(userId);
+      await post.save();
+      res.status(200).json({ message: "Post liked successfully" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log("like & unlike post Error: ", err);
+  }
+};
+
+// Reply to Post
+export const replyToPost = async (req, res) => {
+  try {
+    const { text } = req.body;
+    const postId = req.params.id;
+    const { _id: userId, profilePic: userProfilePic, username } = req.user;
+
+    if (!text) {
+      return res.status(400).json({ error: "Text field is required" });
+    }
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const reply = { userId, text, userProfilePic, username };
+
+    post.replies.push(reply);
+    await post.save();
+
+    res.status(200).json(reply);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log("reply to post Error: ", err);
+  }
+};
+
+export const getFeedPosts = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const following = user.following;
+
+    const feedPosts = await Post.find({ postedBy: { $in: following } }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(feedPosts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log("Feed posts Error: ", err);
+  }
+};
