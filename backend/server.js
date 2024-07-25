@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routers/userRoutes.js";
+import postRoutes from "./routers/postRoutes.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/app/v1/user", userRoutes);
+app.use("/app/v1/posts", postRoutes);
 
 const PORT = process.env.PORT || 4000;
 
