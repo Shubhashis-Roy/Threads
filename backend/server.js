@@ -15,8 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-app.use("/app/v1/user", userRoutes);
-app.use("/app/v1/posts", postRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/posts", postRoutes);
 
 const PORT = process.env.PORT || 4000;
 
