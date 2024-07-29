@@ -35,28 +35,30 @@ export default function SignupCard() {
   //   const showToast = useShowToast();
   //   const setUser = useSetRecoilState(userAtom);
 
-  //   const handleSignup = async () => {
-  //     try {
-  //       const res = await fetch("/api/users/signup", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(inputs),
-  //       });
-  //       const data = await res.json();
+  const handleSignup = async () => {
+    try {
+      const res = await fetch("/api/v1/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+      const data = await res.json();
+      console.log(data, "hlo res");
 
-  //       if (data.error) {
-  //         showToast("Error", data.error, "error");
-  //         return;
-  //       }
+      // if (data.error) {
+      //   showToast("Error", data.error, "error");
+      //   return;
+      // }
+      // localStorage.setItem("user-threads", JSON.stringify(data));
+      // setUser(data);
+    } catch (error) {
+      console.log(error);
 
-  //       localStorage.setItem("user-threads", JSON.stringify(data));
-  //       setUser(data);
-  //     } catch (error) {
-  //       showToast("Error", error, "error");
-  //     }
-  //   };
+      // showToast("Error", error, "error");
+    }
+  };
 
   return (
     <Flex align={"center"} justify={"center"}>
@@ -140,7 +142,7 @@ export default function SignupCard() {
                 _hover={{
                   bg: useColorModeValue("gray.700", "gray.800"),
                 }}
-                // onClick={handleSignup}
+                onClick={handleSignup}
               >
                 Sign up
               </Button>
